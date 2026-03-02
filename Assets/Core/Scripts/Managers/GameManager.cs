@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -14,9 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FadeScreen _fadeScreen;
     [SerializeField] private Spawner[] _spawnerList;
     [SerializeField] private GameObject _pauseMenu;
-    [SerializeField] private Transform _soliderSpawner;
-    [SerializeField] private GameObject _soliderPrefab;
-    [SerializeField] private float _soliderFadeDuration = .5f;
     
     private Coroutine _fadeScreenCoroutine;
     private bool _canBePaused = true;
@@ -35,8 +31,6 @@ public class GameManager : MonoBehaviour
         Door.OnDoorOpen += Door_OnDoorOpen;
         MenuButton.OnPlayButtonPressed += MenuButton_OnPlayButtonPressed;
         InputManager.Instance.OnPauseAction += InputManager_OnPauseAction;
-        InputManager.Instance.OnSecretInputSolved += InputManager_OnSecretInputSolved;
-        GameStateManager.OnStateChanged += GameStateManager_OnStateChanged;
 
         if (SceneManager.GetActiveScene().name == SceneInfo.MAIN_MENU_SCENE)
         {
@@ -84,11 +78,6 @@ public class GameManager : MonoBehaviour
     private void StartForMenu_OnMenuButtonContainerAppear(object sender, EventArgs e)
     {
         GameStateManager.State = GameState.MainMenu;
-    }
-
-    private void InputManager_OnSecretInputSolved(object sender, EventArgs e)
-    {
-        StartCoroutine(LoadScene(SceneInfo.SECRET_GAME_MODE_SCENE));
     }
 
     private void InputManager_OnPauseAction(object sender, EventArgs e)
@@ -204,7 +193,6 @@ public class GameManager : MonoBehaviour
         MenuButton.OnPlayButtonPressed -= MenuButton_OnPlayButtonPressed;
         InputManager.Instance.OnPauseAction -= InputManager_OnPauseAction;
         InputManager.Instance.OnSecretInputSolved -= InputManager_OnSecretInputSolved;
-        GameStateManager.OnStateChanged -= GameStateManager_OnStateChanged;
 
         if (SceneManager.GetActiveScene().name == SceneInfo.MAIN_MENU_SCENE)
         {
@@ -213,36 +201,6 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == SceneInfo.SECRET_GAME_MODE_SCENE)
         {
             RestartPanel.OnRestartPanelOpened -= RestartPanel_OnRestartPanelOpened;
-        }
-    }
-
-    private void GameStateManager_OnStateChanged(object sender, GameStateManager.OnStateChangedEventArgs e)
-    {
-        switch (e.CurrentState)
-        {
-            case GameState.ExamsFailed:
-            {
-                if (SceneManager.GetActiveScene().name == SceneInfo.SAD_END_SCENE) return;
-                if (Timer.Instance != null && Timer.Instance.IsRunning)
-                {
-                    StartCoroutine(SadSceneTransition());
-                }
-                else
-                {
-                    StartCoroutine(LoadScene(SceneInfo.SAD_END_SCENE));
-                }
-
-                break;
-            }
-            case GameState.ExamsPassed:
-            {
-                if (Timer.Instance != null)
-                {
-                    Timer.Instance.DestroyTimer();
-                }
-                PlayerPrefs.SetInt("IsGameCompleted", 1);
-                break;
-            }
         }
     }
 
@@ -277,19 +235,5 @@ public class GameManager : MonoBehaviour
         GameStateManager.State = GameState.MainMenu;
 
         SceneManager.LoadScene(SceneInfo.MAIN_MENU_SCENE);
-    }
-
-    private IEnumerator SadSceneTransition()
-    {
-        Player.Instance.CanAct = false;
-        yield return new WaitForSeconds(1);
-        GameObject solider = Instantiate(_soliderPrefab, _soliderSpawner);
-        solider.GetComponent<SpriteRenderer>().DOFade(1f, _soliderFadeDuration);
-        for (int i = 0; i < 3; i++)
-        {
-            SoundManager.Instance.PlayFootstepsSound();
-            yield return new WaitForSeconds(1f);
-        }
-        StartCoroutine(LoadScene(SceneInfo.SAD_END_SCENE));
     }
 }
