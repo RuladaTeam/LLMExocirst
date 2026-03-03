@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using static MapManager;
 
 
 public class GameManager : MonoBehaviour
@@ -26,21 +27,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        Debug.Log(GameStateManager.State);
+    }
+
     private void Start()
     {
         Door.OnDoorOpen += Door_OnDoorOpen;
-        MenuButton.OnPlayButtonPressed += MenuButton_OnPlayButtonPressed;
+        MapManager.OnMapButtonClick += MapManager_OnMapButtonClick;
         InputManager.Instance.OnPauseAction += InputManager_OnPauseAction;
-
-        if (SceneManager.GetActiveScene().name == SceneInfo.MAIN_MENU_SCENE)
-        {
-            StartForMenu.OnMenuButtonContainerAppear += StartForMenu_OnMenuButtonContainerAppear;
-        }
-
-        if (SceneManager.GetActiveScene().name == SceneInfo.SECRET_GAME_MODE_SCENE)
-        {
-            RestartPanel.OnRestartPanelOpened += RestartPanel_OnRestartPanelOpened;
-        }
+        
         
         // change state depending on current scene to easier test inside editor
         // for example when starting not from main menu scene
@@ -103,6 +100,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoadScene(e.SceneToLoadName));
     }
 
+    private void MapManager_OnMapButtonClick(object sender, MapManager.OnMapButtonClickEventArgs e)
+    {
+        StartCoroutine(LoadScene(e.SceneToLoadName));
+    }
+
     private IEnumerator LoadScene(string sceneName, float duration = 1.5f)
     {
         if (_isSceneLoading)
@@ -113,10 +115,10 @@ public class GameManager : MonoBehaviour
         _canBePaused = false;
         float waitAfterFadingDuration = 0f;
 
-        if (sceneName != SceneInfo.CORRIDOR_SCENE && GameStateManager.State != SceneInfo.SceneStates[sceneName])
-        {
-            GameStateManager.State = SceneInfo.SceneStates[sceneName];
-        }
+        //if (sceneName != SceneInfo.CORRIDOR_SCENE && GameStateManager.State != SceneInfo.SceneStates[sceneName])
+        //{
+        //    GameStateManager.State = SceneInfo.SceneStates[sceneName];
+        //}
         
         if (GameStateManager.State == GameState.AtHome && sceneName == SceneInfo.CORRIDOR_SCENE)
         {
@@ -190,17 +192,13 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         Door.OnDoorOpen -= Door_OnDoorOpen;
+        MapManager.OnMapButtonClick -= MapManager_OnMapButtonClick;
         MenuButton.OnPlayButtonPressed -= MenuButton_OnPlayButtonPressed;
         InputManager.Instance.OnPauseAction -= InputManager_OnPauseAction;
-        InputManager.Instance.OnSecretInputSolved -= InputManager_OnSecretInputSolved;
 
         if (SceneManager.GetActiveScene().name == SceneInfo.MAIN_MENU_SCENE)
         {
             StartForMenu.OnMenuButtonContainerAppear -= StartForMenu_OnMenuButtonContainerAppear;
-        }
-        if (SceneManager.GetActiveScene().name == SceneInfo.SECRET_GAME_MODE_SCENE)
-        {
-            RestartPanel.OnRestartPanelOpened -= RestartPanel_OnRestartPanelOpened;
         }
     }
 

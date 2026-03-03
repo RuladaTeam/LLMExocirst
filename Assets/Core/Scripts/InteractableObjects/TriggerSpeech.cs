@@ -4,6 +4,7 @@ using UnityEngine;
 public class TriggerSpeech : InteractableObject
 {
     [Space(30)]
+    [SerializeField] private bool _isStatable = true;
     [SerializeField] GameState _nessecaryState;
     private Collider2D collider2D;
     private DialogueViewer _dialogueViewer;
@@ -18,7 +19,7 @@ public class TriggerSpeech : InteractableObject
 
     public override bool TrySelect()
     {
-        if (_isInteractable && GameStateManager.State == _nessecaryState)
+        if ((_isInteractable && GameStateManager.State == _nessecaryState) || (_isInteractable && !_isStatable))
         {
             if (!_isSpeechEnabled)
             {

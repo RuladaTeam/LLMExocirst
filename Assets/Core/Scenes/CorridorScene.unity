@@ -482,6 +482,10 @@ PrefabInstance:
       value: -0.8047247
       objectReference: {fileID: 0}
     - target: {fileID: 2032501729349670776, guid: 51339a05ef5032744af01a97521996e0, type: 3}
+      propertyPath: _isStatable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2032501729349670776, guid: 51339a05ef5032744af01a97521996e0, type: 3}
       propertyPath: _nessecaryState
       value: 3
       objectReference: {fileID: 0}
@@ -573,6 +577,10 @@ PrefabInstance:
     - target: {fileID: 7695295450831688909, guid: 1ec6f67cb7ac7c123945b475c7278130, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7695295450831688909, guid: 1ec6f67cb7ac7c123945b475c7278130, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8412565042143066847, guid: 1ec6f67cb7ac7c123945b475c7278130, type: 3}
       propertyPath: m_LocalPosition.x

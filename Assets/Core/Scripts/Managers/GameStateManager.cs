@@ -11,11 +11,6 @@ public static class GameStateManager
         set
         {
             if (_state == value) return;
-            if ((_state == GameState.ExamsFailed && value == GameState.ExamsPassed)
-                || (_state == GameState.ExamsPassed && value == GameState.ExamsFailed))
-            {
-                return;
-            }
             _state = value;
             //Debug.Log(State);
             OnStateChanged?.Invoke(null, new OnStateChangedEventArgs { CurrentState = _state });
@@ -41,4 +36,8 @@ public enum GameState
     ITExam,
     ExamsFailed,
     ExamsPassed,
+    map,
+    lvl1,
+    lvl2,
+    lvl3,
 }

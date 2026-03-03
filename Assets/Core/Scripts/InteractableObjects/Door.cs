@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Door : InteractableObject
 {
+    [SerializeField] private bool _isAlwaysOpen = false;
     [SerializeField] private GameState _stateToOpen;
     [SerializeField] private SceneNames _sceneToLoad;
     
@@ -16,7 +17,7 @@ public class Door : InteractableObject
 
     private void Start()
     {
-        if (GameStateManager.State != _stateToOpen)
+        if (GameStateManager.State != _stateToOpen && !_isAlwaysOpen)
         {
             _isInteractable = false;
         }

@@ -15,6 +15,7 @@ public class DialogueBunch : ScriptableObject
     [SerializeField, Range(0, 97)] private float _minReputation = 40f;
     [SerializeField, Range(3, 100)] private float _maxReputation = 85f;
     [Space(10)]
+    [SerializeField] private bool _isStatable = false;
     [SerializeField] private GameState _nextGameState;
     [Space(10)]
     [SerializeField] private List<string> _necessaryPhrasesForResult;
@@ -28,6 +29,8 @@ public class DialogueBunch : ScriptableObject
     {
         get => _isReputationable;
     }
+    public bool IsStatable
+    { get => _isStatable; }
     public GameState NextGameState
     {
         get => _nextGameState;

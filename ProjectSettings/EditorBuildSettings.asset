@@ -35,6 +35,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Core/Scenes/SadEndScene.unity
     guid: b8f15dcf39e3b4adfacc66d3fedcc134
+  - enabled: 1
+    path: Assets/Core/Scenes/NewMainScenes/Map.unity
+    guid: 4bffd09f895453b47afda7c5c45642d9
+  - enabled: 1
+    path: Assets/Core/Scenes/NewMainScenes/LVL1.unity
+    guid: a3f4366864ad9444b96b386dc7cd51e7
+  - enabled: 1
+    path: Assets/Core/Scenes/NewMainScenes/LVL2.unity
+    guid: b62775f9de539ff49b4b143cb3ed9dbc
+  - enabled: 1
+    path: Assets/Core/Scenes/NewMainScenes/LVL3.unity
+    guid: 22942f06d4f4e9c4390562661ba70ad1
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

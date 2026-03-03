@@ -11,7 +11,12 @@ public abstract class SceneInfo
     public const string HAPPY_END_SCENE = "HappyEndScene";
     public const string SAD_END_SCENE = "SadEndScene";
     public const string SECRET_GAME_MODE_SCENE = "SecretGameModeScene";
-    
+    public const string MAP_SCENE = "Map";
+    public const string LVL1_SCENE = "LVL1";
+    public const string LVL2_SCENE = "LVL2";
+    public const string LVL3_SCENE = "LVL3";
+
+
     public static Dictionary<SceneNames, string> SceneNamesMap = new() {
         { SceneNames.MainMenuScene, "MainMenuScene" },
         { SceneNames.KitomirHomeScene, "KitomirHomeScene" },
@@ -21,7 +26,10 @@ public abstract class SceneInfo
         { SceneNames.ItauditoriumScene, "ITAuditoriumScene" },
         { SceneNames.HappyEndScene, "HappyEndScene" },
         { SceneNames.SadEndScene, "SadEndScene" },
-        { SceneNames.SecretGameModeScene, "SecretGameModeScene" }
+        { SceneNames.map, "Map" },
+        { SceneNames.lvl1, "LVL1" },
+                { SceneNames.lvl2, "LVL2" },
+                        { SceneNames.lvl3, "LVL3" },
     };
     
     public static Dictionary<string, GameState> SceneStates = new() {
@@ -33,7 +41,11 @@ public abstract class SceneInfo
         { ITAUDITORIUM_SCENE, GameState.ITExam },
         { SAD_END_SCENE, GameState.ExamsFailed },
         { HAPPY_END_SCENE, GameState.ExamsPassed },
-        { SECRET_GAME_MODE_SCENE, GameState.MainMenu }
+        { SECRET_GAME_MODE_SCENE, GameState.MainMenu },
+        { MAP_SCENE, GameState.map },
+        { LVL1_SCENE, GameState.lvl1 },
+        { LVL2_SCENE, GameState.lvl2 },
+        { LVL3_SCENE, GameState.lvl3 },
     };
     
 }
@@ -49,4 +61,8 @@ public enum SceneNames
     HappyEndScene,
     SadEndScene,
     SecretGameModeScene,
+    map,
+    lvl1,
+    lvl2,
+    lvl3
 }
